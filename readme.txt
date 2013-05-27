@@ -49,7 +49,7 @@ You can also cache and manage all your pages,posts and more within the "WP Fast 
 1. [WP Fast Cache Screenshot](http://www.webhostingweaver.com/images/wp-fast-cache-screenshot.png)
 
 == Changelog ==
-= 1.0 =
+= 1.1 =
 * refresh cache on page/post update.
 
 
