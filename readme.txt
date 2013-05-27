@@ -1,10 +1,10 @@
 === WP Fast Cache ===
 Contributors: Taylor Hawkes
 Donate link: 
-Tags: cache, speed , fast, http cache, wp fast cache, cash
+Tags: cache, speed , fast, http cache, wp fast cache, cash , wp cache
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,10 +49,13 @@ You can also cache and manage all your pages,posts and more within the "WP Fast 
 1. [WP Fast Cache Screenshot](http://www.webhostingweaver.com/images/wp-fast-cache-screenshot.png)
 
 == Changelog ==
-
+= 1.0 =
+* refresh cache on page/post update.
 
 
 == Upgrade notice ==
+= 1.1 =
+This version will auto refresh cache on page/post update.
 
 
 

@@ -35,6 +35,10 @@ register_deactivation_hook( __FILE__, 'wp_fast_cache_remove_plugin' );
 add_action( 'admin_menu', 'wp_fast_cache_my_plugin_menu' );
 add_action( 'edit_form_after_title', 'add_admin_cache_button' );
 
+/*these are for updting the cache automaticly */
+add_action( 'edit_post', 'wp_fast_cache_update_page_cache' );
+
+
 function add_admin_cache_button() {
 ?>
     <?php $wp_fast_cache_pe=wp_fast_cache_is_url_cached(get_permalink($_GET['post'])); ?>
@@ -272,19 +276,28 @@ function wp_fast_cache_my_plugin_options() {
 <button id="wp_fast_cache_create_all_categories" class="button-primary">Cache All Categories</button>
 
 <hr style="border:0px;border-top: 1px solid #ccc;margin:5px 0px;">
-
-<table class="widefat" style="width:auto">
-<tr>
-<td style="padding:8px;"> <input style="width:460px;" type="text" id="wp_fast_cache_specific_url" name="wp_fast_cache_specific_url"> </td>
-<td style="padding:8px;"> <button id="wp_fast_cache_specific_url_button" class="button-primary">Cache This Url</button></td>
-</tr>
-</table>
+    <div style="float:left"> <!-- start floating left-->
+    <table class="widefat" style="width:auto">
+    <tr>
+    <td style="padding:8px;"> <input style="width:460px;" type="text" id="wp_fast_cache_specific_url" name="wp_fast_cache_specific_url"> </td>
+    <td style="padding:8px;"> <button id="wp_fast_cache_specific_url_button" class="button-primary">Cache This Url</button></td>
+    </tr>
+    </table>
 
         <h3> Cached Url's </h3>
+        
         <table class="wp-list-table widefat" style="width:auto;min-width:600px;">
         <thead> <tr><th> Url </th> <th> Delete </th> <th> Update </th></tr></thead>
             <?php wp_fast_cache_get_cached_urls() ?> 
         </table>
+        </div>  <!-- end floating left-->
+    
+       <div style="float:right;">
+
+ <iframe scrolling="no" src="http://www.webhostingweaver.com/wp-fast-cache-block.php" style="border:1px solid #ccc;height:200px;width:200px;overflow:hidden;"> </iframe> </div>
+        <div style="clear:both"> </div> 
+
+
         </div>
     <?php
 }
@@ -404,7 +417,18 @@ foreach($urls as $url){?>
 <?php }  
 
 }
-
+###############################################################################
+# Auto refreshing cache 
+###############################################################################
+function wp_fast_cache_update_page_cache($post_id){
+    $url = get_permalink($post_id);
+        
+    // we should only update if the page is cached
+    if(wp_fast_cache_is_url_cached($url)){
+         wp_fast_cache_refresh_cached_url($url);
+    }
+}
+        
 ###############################################################################
 # BULK CRUD 
 ###############################################################################
@@ -418,8 +442,8 @@ function wp_fast_cache_bulk_cache_all_categories(){
 
 function wp_fast_cache_bulk_cache_all_pages(){
 $args = array(
-    'sort_order' => 'ASC',
-    'sort_column' => 'post_title',
+    'sort_order' => 'DESC',
+    'sort_column' => 'post_id',
     'hierarchical' => 1,
     'exclude' => '',
     'include' => '',
@@ -442,8 +466,15 @@ foreach($pages as $page){
 }
 
 function wp_fast_cache_bulk_cache_all_posts(){
-
-$pages = get_posts(''); 
+$args = array(
+    'numberposts'=>'',
+    'orderby'         => 'post_id',
+    'order'           => 'DESC',
+    'post_type'       => 'post',
+    'post_status'     => 'publish');
+    
+$pages = get_posts($args); 
+    
 foreach($pages as $page){
  wp_fast_cache_add_cached_url(get_permalink($page->ID));
 }
@@ -541,8 +572,11 @@ function wp_fast_cache_delete_cached_url($url){
  
 /*I add a cached page*/ 
 function wp_fast_cache_add_cached_url($url){
-    $content=file_get_contents($url);
+    //if page is cached we should not add again return true 
+   if(wp_fast_cache_is_url_cached($url)) {return true;} 
+    
     $target_file= wp_fast_cache_get_file_from_url($url);
+    $content=file_get_contents($url);
     return wp_fast_cache_file_force_contents($target_file,$content); 
 }
 
