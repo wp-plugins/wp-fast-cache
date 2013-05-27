@@ -1,9 +1,9 @@
 <?php
    /*
    Plugin Name: WP Fast Cache
-   Plugin URI: http://www.webhostingweaver.com
+   Plugin URI: http://www.webhostingweaver.com/wp-fast-cache/
    Description: Page Caching to make your WP REALLY FREAKING FAST 
-   Version: 1.0
+   Version: 1.1
    Author:Taylor Hawkes 
    Author URI: http://taylor.woodstitch.com
    License: GPL2
