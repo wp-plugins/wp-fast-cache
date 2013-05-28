@@ -3,7 +3,7 @@
    Plugin Name: WP Fast Cache
    Plugin URI: http://www.webhostingweaver.com/wp-fast-cache/
    Description: Page Caching to make your WP REALLY FREAKING FAST 
-   Version: 1.1
+   Version: 1.2
    Author:Taylor Hawkes 
    Author URI: http://taylor.woodstitch.com
    License: GPL2
@@ -453,7 +453,7 @@ $args = array(
     'child_of' => 0,
     'parent' => -1,
     'exclude_tree' => '',
-    'number' => '',
+    'number' => '99999',
     'offset' => 0,
     'post_type' => 'page',
     'post_status' => 'publish'
@@ -467,7 +467,7 @@ foreach($pages as $page){
 
 function wp_fast_cache_bulk_cache_all_posts(){
 $args = array(
-    'numberposts'=>'',
+    'numberposts'=>'99999',
     'orderby'         => 'post_id',
     'order'           => 'DESC',
     'post_type'       => 'post',

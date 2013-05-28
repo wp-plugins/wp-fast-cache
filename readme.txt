@@ -4,7 +4,7 @@ Donate link:
 Tags: cache, speed , fast, http cache, wp fast cache, cash , wp cache
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,13 +51,14 @@ You can also cache and manage all your pages,posts and more within the "WP Fast 
 == Changelog ==
 = 1.1 =
 * refresh cache on page/post update.
+= 1.2 =
+* Fixed issue with not creating all caches on some wp setups.
 
+    
 
 == Upgrade notice ==
 = 1.1 =
 This version will auto refresh cache on page/post update.
-
-
 
 == Arbitrary section 1 ==
 
