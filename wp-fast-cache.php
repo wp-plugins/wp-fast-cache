@@ -3,7 +3,7 @@
    Plugin Name: WP Fast Cache
    Plugin URI: http://www.webhostingweaver.com/wp-fast-cache/
    Description: Page Caching to make your WP REALLY FREAKING FAST 
-   Version: 1.2
+   Version: 1.3
    Author:Taylor Hawkes 
    Author URI: http://taylor.woodstitch.com
    License: GPL2
@@ -59,6 +59,11 @@ function wp_fast_cache_add_javascript_to_admin() {
 ?>
 <script type="text/javascript" >
 jQuery(document).ready(function($) {
+    //for detecing input change
+$("#wp_fast_cache_create_all_posts_number, #wp_fast_cache_create_all_pages_number").on("input",null,null,function(){
+    $("#"+$(this).attr('id')+"_d").html($(this).val());
+});
+
     $("#wp_fast_cache_add_cache").click(function(){
         var element=$(this);
         var data = {
@@ -153,8 +158,26 @@ $("#wp_fast_cache_refresh_all").click(function(){
     var r=confirm("Are you sure? This will refresh all cached files. Press ok to refresh all cached files.");
     if (r==true)
         {
-            $('#wp_fast_cache_bulk_action').val('refresh_all');
-            $('#wp_fast_cache_bulk_action_form').submit();
+           //we get all the url's
+            $("#wp_fast_cache_url_table .wp_fast_cached_cached_url").each(function(i){
+                    
+                var element=$(this);
+                element.parent().parent().find('.wp_fast_cache_refresh_cache').html('Refreshing...');
+                    
+                var data = {
+                    action: 'wp_fast_cache_ajax_refresh_url',
+                    url: element.attr('href')
+                };
+                $.post(ajaxurl, data, function(response) {
+                    element.find('.wp_fast_cache_refreshing').remove();
+                    element.parent().parent().find('.wp_fast_cache_refresh_cache').html('Refresh cache');
+                });
+
+                
+            });
+            
+           // $('#wp_fast_cache_bulk_action').val('refresh_all');
+           // $('#wp_fast_cache_bulk_action_form').submit();
         }
       else
         {
@@ -259,21 +282,41 @@ function wp_fast_cache_my_plugin_options() {
 
     }
     ?>
-
+   <style>
+   .wp_fast_cache_button_left_input{
+        width:30px;
+        position:relative;
+        left:3px;
+        padding-top:4px;
+    } 
+    </style> 
     <div class="wrap">
     <div id="icon-options-general" class="icon32"><br></div>
       <h2 style="margin-bottom:10px;"> WP Fast Cache </h2> 
     <?php echo $wp_fast_cache_msg ;?>
+    <?php
+     $wp_fast_posts_to_cache=($_REQUEST['wp_fast_cache_create_all_posts_number']) ?  $_REQUEST['wp_fast_cache_create_all_posts_number'] : 25;
+     $wp_fast_pages_to_cache=($_REQUEST['wp_fast_cache_create_all_pages_number']) ?  $_REQUEST['wp_fast_cache_create_all_pages_number'] : 25;
+    ?>
         <?php wp_fast_cache_get_instalation_instructions()?>
-        <form method="post" id="wp_fast_cache_bulk_action_form"action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+    
+           <button class="button-primary" id="wp_fast_cache_delete_all">Delete All Cached Url's</button>
+            <button id="wp_fast_cache_refresh_all"class="button-primary">Refresh All Cached Url's</button>
+ 
+        <form style="display:inline" method="post" id="wp_fast_cache_bulk_action_form" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
             <input id="wp_fast_cache_bulk_action"type="hidden" name="wp_fast_cache_bulk_action">
             <input id="wp_fast_cache_bulk_action_url"type="hidden" name="wp_fast_cache_bulk_action_url">
+    
+    
+            <input type="text" name="wp_fast_cache_create_all_pages_number" id="wp_fast_cache_create_all_pages_number" class="wp_fast_cache_button_left_input" value="<?php echo $wp_fast_pages_to_cache?>"> 
+            <button id="wp_fast_cache_create_all_pages" class="button-primary">Cache <span id="wp_fast_cache_create_all_pages_number_d"><?php echo $wp_fast_pages_to_cache?> </span> Recent Pages</button>
+    
+            <input type="text" name="wp_fast_cache_create_all_posts_number" id="wp_fast_cache_create_all_posts_number" class="wp_fast_cache_button_left_input" value="<?php echo $wp_fast_posts_to_cache?>"> 
+            <button id="wp_fast_cache_create_all_posts" class="button-primary">Cache <span id="wp_fast_cache_create_all_posts_number_d"><?php echo $wp_fast_posts_to_cache?></span> Recent Posts</button>
+    
+            <button id="wp_fast_cache_create_all_categories" class="button-primary">Cache All Categories</button>
+        
         </form>
-<button class="button-primary" id="wp_fast_cache_delete_all">Delete All Cached Url's</button>
-<button id="wp_fast_cache_refresh_all"class="button-primary">Refresh All Cached Url's</button>
-<button id="wp_fast_cache_create_all_pages" class="button-primary">Cache All Pages</button>
-<button id="wp_fast_cache_create_all_posts" class="button-primary">Cache All Posts</button>
-<button id="wp_fast_cache_create_all_categories" class="button-primary">Cache All Categories</button>
 
 <hr style="border:0px;border-top: 1px solid #ccc;margin:5px 0px;">
     <div style="float:left"> <!-- start floating left-->
@@ -286,7 +329,7 @@ function wp_fast_cache_my_plugin_options() {
 
         <h3> Cached Url's </h3>
         
-        <table class="wp-list-table widefat" style="width:auto;min-width:600px;">
+        <table id="wp_fast_cache_url_table"class="wp-list-table widefat" style="width:auto;min-width:600px;">
         <thead> <tr><th> Url </th> <th> Delete </th> <th> Update </th></tr></thead>
             <?php wp_fast_cache_get_cached_urls() ?> 
         </table>
@@ -361,16 +404,24 @@ $rewrite='#start_wp_fast_cache - do not remove this comment
  RewriteEngine On
  RewriteCond %{REQUEST_METHOD} ^(GET)
  RewriteCond '.$cache_dir.'%{REQUEST_URI}x__query__x%{QUERY_STRING}.html -f
- RewriteRule ^(.*)$ /wp-content/wp_fast_cache/$1x__query__x%{QUERY_STRING}.html [L]
+ RewriteCond %{HTTP_USER_AGENT} !(iPhone|Windows\sCE|BlackBerry|NetFront|Opera\sMini|Palm\sOS|Blazer|Elaine|^WAP.*$|Plucker|AvantGo|Nokia)
+ RewriteCond %{HTTP_COOKIE} !(wordpress_logged_in) [NC]
+ RewriteRule ^(.*)$ '.$cache_dir.'$1x__query__x%{QUERY_STRING}.html [L]
+    
  RewriteCond %{REQUEST_METHOD} ^(GET)
  RewriteCond %{QUERY_STRING} ^$
  RewriteCond '.$cache_dir.'%{REQUEST_URI}.html -f 
- RewriteRule ^(.*)$ /wp-content/wp_fast_cache/$1.html [L]
+ RewriteCond %{HTTP_USER_AGENT} !(iPhone|Windows\sCE|BlackBerry|NetFront|Opera\sMini|Palm\sOS|Blazer|Elaine|^WAP.*$|Plucker|AvantGo|Nokia)
+ RewriteCond %{HTTP_COOKIE} !(wordpress_logged_in) [NC]
+ RewriteRule ^(.*)$ '.$cache_dir.'$1.html [L]
+    
  RewriteCond %{REQUEST_METHOD} ^(GET)
  RewriteCond %{QUERY_STRING} ^$
  RewriteCond '.$cache_dir.'%{REQUEST_URI} -d
  RewriteCond '.$cache_dir.'%{REQUEST_URI}/index.html -f
- RewriteRule ^(.*)$ /wp-content/wp_fast_cache/$1index.html [L]
+ RewriteCond %{HTTP_USER_AGENT} !(iPhone|Windows\sCE|BlackBerry|NetFront|Opera\sMini|Palm\sOS|Blazer|Elaine|^WAP.*$|Plucker|AvantGo|Nokia)
+ RewriteCond %{HTTP_COOKIE} !(wordpress_logged_in) [NC]
+ RewriteRule ^(.*)$ '.$cache_dir.'$1index.html [L]
 </IfModule>
 #end_wp_fast_cache
 ';   
@@ -409,7 +460,7 @@ foreach($files as $file){
 foreach($urls as $url){?>
     
     <tr> 
-        <td><a target="_blank" href="<?php echo $url ?>"> <?php echo $url?></td>
+        <td><a class="wp_fast_cached_cached_url" target="_blank" href="<?php echo $url ?>"> <?php echo $url?></td>
         <td> <a href="#" class="wp_fast_cache_delete_cache"  page_url="<?php echo $url?>"> Delete from cache </a> </td>
         <td><a href="#" class="wp_fast_cache_refresh_cache" page_url="<?php echo $url?>"> Refresh cache </a> </td>
     </tr>
@@ -441,6 +492,8 @@ function wp_fast_cache_bulk_cache_all_categories(){
 }
 
 function wp_fast_cache_bulk_cache_all_pages(){
+   $num=$_POST['wp_fast_cache_create_all_pages_number'];
+    if(!$num){$num=25;}
 $args = array(
     'sort_order' => 'DESC',
     'sort_column' => 'post_id',
@@ -453,7 +506,7 @@ $args = array(
     'child_of' => 0,
     'parent' => -1,
     'exclude_tree' => '',
-    'number' => '99999',
+    'number' => $num,
     'offset' => 0,
     'post_type' => 'page',
     'post_status' => 'publish'
@@ -466,8 +519,11 @@ foreach($pages as $page){
 }
 
 function wp_fast_cache_bulk_cache_all_posts(){
+    $num=$_POST['wp_fast_cache_create_all_posts_number'];
+    if(!$num){$num=25;}
+    
 $args = array(
-    'numberposts'=>'99999',
+    'numberposts'=>$num,
     'orderby'         => 'post_id',
     'order'           => 'DESC',
     'post_type'       => 'post',

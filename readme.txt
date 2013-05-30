@@ -4,7 +4,7 @@ Donate link:
 Tags: cache, speed , fast, http cache, wp fast cache, cash , wp cache
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,16 +18,21 @@ This cache works by creating a static html file for every page cached and then s
 
 The Caching system has a simple to user interface for creating, managing and updating cached pages. It also hooks into pages/posts for easy to user cache management on a page level.
 
+<div class="video">
+<iframe width="420" height="315" src="http://www.youtube.com/embed/LUftOTA98Ik" frameborder="0" allowfullscreen></iframe>
+</div>
+
 Features:
-- bulk caching of all pages, posts, categories
-- caching of all permalink types including /?p=123 format
-- Easy to use cache management
-- Page/Post level caching management
+* bulk caching of all pages, posts, categories
+* caching of all permalink types including /?p=123 format
+* Easy to use cache management
+* Page/Post level caching management
 
 Requirements:
-- Apache Mod Rewrite
-- Writable .htaccess (manual work around available)
-- Writable wp-content (manual work around available)
+* Linux     
+* Apache Mod Rewrite
+* Writable .htaccess (manual work around available)
+* Writable wp-content (manual work around available)
 
 == Installation ==
 
@@ -53,12 +58,17 @@ You can also cache and manage all your pages,posts and more within the "WP Fast 
 * refresh cache on page/post update.
 = 1.2 =
 * Fixed issue with not creating all caches on some wp setups.
-
+= 1.3 -
+* Fixed Mobile Devices not redirecting (does not cache mobile)
+* Fixed Logged in users seing cached pages (does not cache logged in users)
+* Fixed Bulk Refresh time out
     
 
 == Upgrade notice ==
 = 1.1 =
 This version will auto refresh cache on page/post update.
+= 1.2 =
+There is a new update available for wp fast cache. Uninstall this version and install the newest version. 
 
 == Arbitrary section 1 ==
 
