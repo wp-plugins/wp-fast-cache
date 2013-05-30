@@ -1,7 +1,7 @@
 === WP Fast Cache ===
 Contributors: Taylor Hawkes
 Donate link: 
-Tags: cache, speed , fast, http cache, wp fast cache, cash , wp cache
+Tags: cache, wp fast cache,speed, fast, http cache, w3 total cache, batcache, wp cache, wp super cache, quick cache, lite cache, hyper cache, db cache reloaded fix, wp green cache, aoi cache & performance, generate cache,admin flush W3TC cache,cash, wp cache, wpo, web performance optimization, performance, availability, scaling, scalability, user experience, cache, caching, page cache, css cache, js cache, db cache, disk cache, disk caching, database cache, http compression, gzip, deflate, minify, cdn, content delivery network, media library, performance, speed, multiple hosts, css, merge, combine, unobtrusive javascript, compress, optimize, optimizer, javascript, js, cascading style sheet, plugin, yslow, yui, google, google rank, google page speed, mod_pagespeed, new relic, newrelic, aws, s3, cloudfront, sns, elasticache, rds, flash media server, amazon web services, cloud files, rackspace, akamai, max cdn, netdna, limelight, nginx, litespeed, apache, varnish, xcache, apc, eacclerator, wincache, mysql, wp minify, bwp-minify, buddypress,performance,caching
 Requires at least: 3.3
 Tested up to: 3.5.1
 Stable tag: 1.3
@@ -17,18 +17,18 @@ WP Fast Cache is built for pure website loading speed - You will not be able to 
 This cache works by creating a static html file for every page cached and then serving that page up first, meaning for cache pages apache only has to serve up static html files, no need to run any PHP or make any database calls.
 
 The Caching system has a simple to user interface for creating, managing and updating cached pages. It also hooks into pages/posts for easy to user cache management on a page level.
-
-<div class="video">
-<iframe width="420" height="315" src="http://www.youtube.com/embed/LUftOTA98Ik" frameborder="0" allowfullscreen></iframe>
-</div>
+    
+http://www.youtube.com/watch?v=LUftOTA98Ik
 
 Features:
-* bulk caching of all pages, posts, categories
+    
+* Bulk caching of all pages, posts, categories
 * caching of all permalink types including /?p=123 format
 * Easy to use cache management
 * Page/Post level caching management
 
 Requirements:
+    
 * Linux     
 * Apache Mod Rewrite
 * Writable .htaccess (manual work around available)
