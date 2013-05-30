@@ -1,7 +1,7 @@
 === WP Fast Cache ===
 Contributors: Taylor Hawkes
 Donate link: 
-Tags: cache, wp fast cache,speed, fast, http cache, w3 total cache, batcache, wp cache, wp super cache, quick cache, lite cache, hyper cache, db cache reloaded fix, wp green cache, aoi cache & performance, generate cache,admin flush W3TC cache,cash, wp cache, wpo, web performance optimization, performance, availability, scaling, scalability, user experience, cache, caching, page cache, css cache, js cache, db cache, disk cache, disk caching, database cache, http compression, gzip, deflate, minify, cdn, content delivery network, media library, performance, speed, multiple hosts, css, merge, combine, unobtrusive javascript, compress, optimize, optimizer, javascript, js, cascading style sheet, plugin, yslow, yui, google, google rank, google page speed, mod_pagespeed, new relic, newrelic, aws, s3, cloudfront, sns, elasticache, rds, flash media server, amazon web services, cloud files, rackspace, akamai, max cdn, netdna, limelight, nginx, litespeed, apache, varnish, xcache, apc, eacclerator, wincache, mysql, wp minify, bwp-minify, buddypress,performance,caching
+Tags: cache, wp fast cache,speed, fast, http cache, w3 total cache, batcache, wp cache, wp super cache, quick cache, lite cache, hyper cache, db cache reloaded fix, wp green cache, aoi cache & performance, generate cache,W3TC cache,cash, wp cache, wpo, web performance optimization, performance,page cache, css cache, js cache, db cache, disk cache, disk caching, database cache, http compression, cdn, compress, optimize, optimizer, plugin, yslow, yui, google, google rank, google page speed, mod_pagespeed, htaccess, aws, elasticache, apache, varnish, xcache, apc, eacclerator, wincache, wp minify, bwp-minify, performance,caching
 Requires at least: 3.3
 Tested up to: 3.5.1
 Stable tag: 1.3
@@ -38,20 +38,34 @@ Requirements:
 
 1. Upload `WP Fast Cache` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-
+3. Go to "Wp Fast Cache" area and follow any instruction.  
 
 == Frequently asked questions ==
 
-= A question that someone might have =
+= How do I use WP Fast Cache? =
 
-1. How do I use WP Fast Cache
-To use wp fast cache simply go to a page/post and click "add page to wp fast cache". You can then delete/refresh the cached page.
+1. Under the "wp fast cache" area add pages,posts, categories or customer url's to your cache. You can also go to a page/post and click "add page to wp fast cache
+and the page will be added to the cache. 
+2. To see if your pages displayed from WP Fast Cache log out, then navigate to that page, you should notice it loading faster.
+3. After a big change to your website be sure to update all the cached pages.
 
-You can also cache and manage all your pages,posts and more within the "WP Fast Cache" plugin area.
+= Do I have to manually cache every page/post? =
+No, You can bulk add pages/posts to the cache. 
 
-== Screenshots ==
+= Do I have to refresh the cache whenever I update a page/post? =
+No, WP Fast Cache will do this automaticly for you whenever you update or a new comment is published.
 
-1. [WP Fast Cache Screenshot](http://www.webhostingweaver.com/images/wp-fast-cache-screenshot.png)
+= My server times out when adding too many posts/pages =
+For websites with over 100 pages/posts it's pry best to only cache your top 50 or so  pages/posts. You can set how many of your most recent pages/posts to cache 
+    
+= Does WP Fast Cache Support Multisite setup? =
+Not as of version 1.3
+    
+= Does WP Fast Cache work with mobile? =
+Since many sites display different content for mobile devices, WP Fast Cache is disabled for mobile devices as of version 1.3.
+    
+= Why do I get an error when I install Wp Fast Cache?=
+Ensure that your website is run on linux with apache. If you still get an error please log issue under support.  
 
 == Changelog ==
 = 1.1 =
@@ -69,7 +83,5 @@ You can also cache and manage all your pages,posts and more within the "WP Fast 
 This version will auto refresh cache on page/post update.
 = 1.2 =
 There is a new update available for wp fast cache. Uninstall this version and install the newest version. 
-
-== Arbitrary section 1 ==
 
 
