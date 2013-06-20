@@ -3,7 +3,7 @@
    Plugin Name: WP Fast Cache
    Plugin URI: http://www.webhostingweaver.com/wp-fast-cache/
    Description: Page Caching to make your WP REALLY FREAKING FAST 
-   Version: 1.3
+   Version: 1.4
    Author:Taylor Hawkes 
    Author URI: http://taylor.woodstitch.com
    License: GPL2
@@ -293,10 +293,10 @@ function wp_fast_cache_my_plugin_options() {
     <div class="wrap">
     <div id="icon-options-general" class="icon32"><br></div>
       <h2 style="margin-bottom:10px;"> WP Fast Cache </h2> 
-    <?php echo $wp_fast_cache_msg ;?>
+    <?php echo @$wp_fast_cache_msg ;?>
     <?php
-     $wp_fast_posts_to_cache=($_REQUEST['wp_fast_cache_create_all_posts_number']) ?  $_REQUEST['wp_fast_cache_create_all_posts_number'] : 25;
-     $wp_fast_pages_to_cache=($_REQUEST['wp_fast_cache_create_all_pages_number']) ?  $_REQUEST['wp_fast_cache_create_all_pages_number'] : 25;
+     @$wp_fast_posts_to_cache=($_REQUEST['wp_fast_cache_create_all_posts_number']) ?  $_REQUEST['wp_fast_cache_create_all_posts_number'] : 25;
+     @$wp_fast_pages_to_cache=($_REQUEST['wp_fast_cache_create_all_pages_number']) ?  $_REQUEST['wp_fast_cache_create_all_pages_number'] : 25;
     ?>
         <?php wp_fast_cache_get_instalation_instructions()?>
     
@@ -403,25 +403,18 @@ $rewrite='#start_wp_fast_cache - do not remove this comment
 <IfModule mod_rewrite.c>
  RewriteEngine On
  RewriteCond %{REQUEST_METHOD} ^(GET)
- RewriteCond '.$cache_dir.'%{REQUEST_URI}x__query__x%{QUERY_STRING}.html -f
+ RewriteCond '.$cache_dir.'%{HTTP_HOST}%{REQUEST_URI}x__query__x%{QUERY_STRING}index.html -f
  RewriteCond %{HTTP_USER_AGENT} !(iPhone|Windows\sCE|BlackBerry|NetFront|Opera\sMini|Palm\sOS|Blazer|Elaine|^WAP.*$|Plucker|AvantGo|Nokia)
  RewriteCond %{HTTP_COOKIE} !(wordpress_logged_in) [NC]
- RewriteRule ^(.*)$ '.$cache_dir.'$1x__query__x%{QUERY_STRING}.html [L]
+ RewriteRule ^(.*)$ '.$cache_dir.'%{HTTP_HOST}%{REQUEST_URI}x__query__x%{QUERY_STRING}index.html [L]
     
  RewriteCond %{REQUEST_METHOD} ^(GET)
  RewriteCond %{QUERY_STRING} ^$
- RewriteCond '.$cache_dir.'%{REQUEST_URI}.html -f 
+ RewriteCond '.$cache_dir.'%{HTTP_HOST}%{REQUEST_URI}index.html -f 
  RewriteCond %{HTTP_USER_AGENT} !(iPhone|Windows\sCE|BlackBerry|NetFront|Opera\sMini|Palm\sOS|Blazer|Elaine|^WAP.*$|Plucker|AvantGo|Nokia)
  RewriteCond %{HTTP_COOKIE} !(wordpress_logged_in) [NC]
- RewriteRule ^(.*)$ '.$cache_dir.'$1.html [L]
-    
- RewriteCond %{REQUEST_METHOD} ^(GET)
- RewriteCond %{QUERY_STRING} ^$
- RewriteCond '.$cache_dir.'%{REQUEST_URI} -d
- RewriteCond '.$cache_dir.'%{REQUEST_URI}/index.html -f
- RewriteCond %{HTTP_USER_AGENT} !(iPhone|Windows\sCE|BlackBerry|NetFront|Opera\sMini|Palm\sOS|Blazer|Elaine|^WAP.*$|Plucker|AvantGo|Nokia)
- RewriteCond %{HTTP_COOKIE} !(wordpress_logged_in) [NC]
- RewriteRule ^(.*)$ '.$cache_dir.'$1index.html [L]
+ RewriteRule ^(.*)$ '.$cache_dir.'%{HTTP_HOST}%{REQUEST_URI}index.html [L]
+ 
 </IfModule>
 #end_wp_fast_cache
 ';   
@@ -566,38 +559,31 @@ function wp_fast_cache_build_url_from_file($file){
 $cache_dir= WP_CONTENT_DIR."/wp_fast_cache/";
 $file=str_replace($cache_dir,"",$file);
 
-
-$file=preg_replace("/(index\.html|\.html)$/","",$file);
+$file=preg_replace("/(index\.html)$/","",$file);
 
 //revert the x__query__x
 $file=str_replace("x__query__x","?",$file);
-
-
-$url=site_url()."/".$file;
+$url="http://".$file;
+//$url=site_url()."/".$file;
 return $url ;
 } 
 
 //get the file from a url
 function wp_fast_cache_get_file_from_url($url){
-$url=trim($url);
-//let get path then 
+    $url=trim($url);
+        
+    //let get path then 
     $f=parse_url($url) ;
-    $path=$f['path'];
     
+    //multisite-so we create directory for host
+    $path=$f['host'];
+        
+    $path.=$f['path'];
      //if we have query qe are always going to be afiles 
      if($f['query']){
-         $path.="x__query__x".$f['query'].".html";
+         $path.="x__query__x".$f['query']."index.html";
      }else{
-      //if dir we might add index.html
-        if(substr($path, -1)=="/"){
-            $path.="index.html";
-        }else{
-            if(empty($path)){
-                $path="/index.html";
-            }else{
-                $path.=".html";    
-            }
-        } 
+        $path.="index.html";    
     }
 
     $cache_dir= WP_CONTENT_DIR."/wp_fast_cache/";

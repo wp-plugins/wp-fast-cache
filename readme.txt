@@ -4,7 +4,7 @@ Donate link:
 Tags: cache, wp fast cache,speed, fast, http cache, w3 total cache, batcache, wp cache, wp super cache, quick cache, lite cache, hyper cache, db cache reloaded fix, wp green cache, aoi cache & performance, generate cache,W3TC cache,cash, wp cache, wpo, web performance optimization, performance,page cache, css cache, js cache, db cache, disk cache, disk caching, database cache, http compression, cdn, compress, optimize, optimizer, plugin, yslow, yui, google, google rank, google page speed, mod_pagespeed, htaccess, aws, elasticache, apache, varnish, xcache, apc, eacclerator, wincache, wp minify, bwp-minify, performance,caching
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,10 +72,13 @@ Ensure that your website is run on linux with apache. If you still get an error 
 * refresh cache on page/post update.
 = 1.2 =
 * Fixed issue with not creating all caches on some wp setups.
-= 1.3 -
+= 1.3 =
 * Fixed Mobile Devices not redirecting (does not cache mobile)
 * Fixed Logged in users seing cached pages (does not cache logged in users)
 * Fixed Bulk Refresh time out
+= 1.4 =
+* Multisite compatible & Supports multiple Subdomains
+* Suppressed PHP Notices
     
 
 == Upgrade notice ==
@@ -83,5 +86,8 @@ Ensure that your website is run on linux with apache. If you still get an error 
 This version will auto refresh cache on page/post update.
 = 1.2 =
 There is a new update available for wp fast cache. Uninstall this version and install the newest version. 
+= 1.3 =
+There is a new update available for wp fast cache. Uninstall this version and install the newest version. 
+
 
 
