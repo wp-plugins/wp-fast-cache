@@ -12,27 +12,33 @@ Load your web pages as fast as apache will allow with WP Fast Cache.
 
 == Description ==
 
-WP Fast Cache is built for pure website loading speed - You will not be able to find any cache that loads a webpage faster, simple as that. This caching system allows users to cache, pages, posts, categories and any other url on their website.
+<a href="http://www.webhostingweaver.com/wp-fast-cache/">WP Fast Cache </a> is built for pure website loading speed - You will not be able to find any cache that loads a webpage faster, simple as that. This caching system allows users to cache, pages, posts, categories and any other url on their website.
 
 This cache works by creating a static html file for every page cached and then serving that page up first, meaning for cache pages apache only has to serve up static html files, no need to run any PHP or make any database calls.
 
 The Caching system has a simple to user interface for creating, managing and updating cached pages. It also hooks into pages/posts for easy to user cache management on a page level.
+
+
+
     
 http://www.youtube.com/watch?v=LUftOTA98Ik
 
-Features:
+<h4>Features: </h4>
     
 * Bulk caching of all pages, posts, categories
 * caching of all permalink types including /?p=123 format
 * Easy to use cache management
 * Page/Post level caching management
 
-Requirements:
+<h4> Requirements: </h4>
     
 * Linux     
 * Apache Mod Rewrite
 * Writable .htaccess (manual work around available)
 * Writable wp-content (manual work around available)
+
+<h4> Notes  </h4>
+Wp fast cache is built to be light weight and is best used for caching your top 100 or fewer website pages. We noticed that the vast majority of website traffic lands on relatively few pages, this plugin is devloped around the idea of making your top website pages really fast. Thanks to the team at <a href="http://www.webhostingweaver.com/">Web Hosting Weaver</a> for developing wp fast cache, and we hope you enjoy!  
 
 == Installation ==
 
