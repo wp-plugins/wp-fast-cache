@@ -58,6 +58,9 @@ and the page will be added to the cache.
 = Do I have to manually cache every page/post? =
 No, You can bulk add pages/posts to the cache. 
 
+= What web hosting providers does WP Fast Cache work on? =
+WP Fast Cache should work on any hosting provider that is Linux based and runs Apache. It has been tested on most of the <a href="http://www.woodstitch.com/web-hosting-reviews-2014.php">big web hosting companies. </a>
+
 = Do I have to refresh the cache whenever I update a page/post? =
 No, WP Fast Cache will do this automaticly for you whenever you update or a new comment is published.
 

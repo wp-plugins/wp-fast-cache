@@ -320,6 +320,7 @@ function wp_fast_cache_my_plugin_options() {
 
 <hr style="border:0px;border-top: 1px solid #ccc;margin:5px 0px;">
     <div style="float:left"> <!-- start floating left-->
+</form>
     <table class="widefat" style="width:auto">
     <tr>
     <td style="padding:8px;"> <input style="width:460px;" type="text" id="wp_fast_cache_specific_url" name="wp_fast_cache_specific_url"> </td>
