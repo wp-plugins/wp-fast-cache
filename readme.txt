@@ -55,6 +55,9 @@ and the page will be added to the cache.
 2. To see if your pages displayed from WP Fast Cache log out, then navigate to that page, you should notice it loading faster.
 3. After a big change to your website be sure to update all the cached pages.
 
+= Something went wrong how do I manually uninstall WP-fast-cache? =
+If something has gone wrong, you can manually uninstall WP-fast-cache by locating your websites .htaccess file and remove the wp-fast-cache code: everything between the lines #start_wp_fast_cache and #end_wp_fast_cache
+
 = Do I have to manually cache every page/post? =
 No, You can bulk add pages/posts to the cache. 
 
