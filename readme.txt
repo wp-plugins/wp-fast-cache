@@ -1,5 +1,5 @@
 === WP Fast Cache ===
-Contributors: Taylor Hawkes
+Contributors: Taylor Hawkes,Tim Layer
 Donate link: 
 Tags: cache, wp fast cache,speed, fast, http cache, w3 total cache, batcache, wp cache, wp super cache, quick cache, lite cache, hyper cache, db cache reloaded fix, wp green cache, aoi cache & performance, generate cache,W3TC cache,cash, wp cache, wpo, web performance optimization, performance,page cache, css cache, js cache, db cache, disk cache, disk caching, database cache, http compression, cdn, compress, optimize, optimizer, plugin, yslow, yui, google, google rank, google page speed, mod_pagespeed, htaccess, aws, elasticache, apache, varnish, xcache, apc, eacclerator, wincache, wp minify, bwp-minify, performance,caching
 Requires at least: 3.3
