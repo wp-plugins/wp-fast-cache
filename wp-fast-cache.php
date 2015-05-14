@@ -272,11 +272,14 @@ function wp_fast_cache_my_plugin_options() {
         }
 
         if($_POST['wp_fast_cache_bulk_action']=="cache_this_url"){
-            if(!wp_fast_cache_add_cached_url($_POST['wp_fast_cache_bulk_action_url'])){
+
+            $bulk_url=filter_var($_POST['wp_fast_cache_bulk_action_url'],FILTER_VALIDATE_URL);
+
+            if(!wp_fast_cache_add_cached_url($bulk_url)){
                 $wp_fast_cache_msg=' <div id="message" class="error"><p>Could not add this url!</p></div>';
             }else{
                 
-                $wp_fast_cache_msg=' <div id="message" class="message"><p>'.$_POST['wp_fast_cache_bulk_action_url'].' has been added to cache!</p></div>';
+                $wp_fast_cache_msg=' <div id="message" class="message"><p>'.$bulk_url.' has been added to cache!</p></div>';
             }
         }
 
